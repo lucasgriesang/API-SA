@@ -2,9 +2,34 @@ import { randomUUID } from "crypto";
 import { sql } from './db.js';
 
 export class DatabasePostgres { 
+  async verificarSeUsuarioExiste(credentials) {
+    return await sql`select * from users where name = ${credentials.name} and password = ${credentials.password}`;
+  }
+
   async listUsers() {
     const users = await sql`select * from users`;
     return users;
+  }
+
+
+  async createUser(user) {
+    const id = randomUUID();
+    console.log('id', id);
+    const name = user.name;
+    const password = user.password
+    
+    await sql`insert into users (id, name, password)
+    values (${id}, ${name}, ${password} )`
+  }
+
+  async cadastroCriar(cadastro) {
+    const id = randomUUID();
+    console.log('id', id);
+    const name = user.name;
+    const password = user.password
+    
+    await sql`insert into users (id, name, password)
+    values (${id}, ${name}, ${password} )`
   }
 
   async createUser(user) {
@@ -46,3 +71,4 @@ export class DatabasePostgres {
   }
 
 }
+

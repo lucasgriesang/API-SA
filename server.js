@@ -14,12 +14,35 @@ server.register(cors, {
 
 // ENDPOINTS (CRUD):
 
-// CREATE
-server.post('/lixoEletronico', async (request, reply) => {
-    const body = request.body;
-    await databasePostgres.createlixo(body);
-    return reply.status(201).send();
+server.post('/login', async (request, reply) => {
+    const login = request.body;
+    const exist = await databasePostgres.verificarSeUsuarioExiste(login);
+    if (exist[0]) {
+        return reply.status(200).send('Dale! é os Guri');
+    } else {
+        return reply.status(400).send('nao deu boa');
+    }
 })
+
+server.post('/cadastro', async (request, reply) => {
+    const cadastro = request.body;
+    const exist = await databasePostgres.cadastroCriar(login);
+    return reply.status(400).send('Deu Bom');
+})
+
+
+
+// CREATE LIXO
+server.post('/lixoEletronico', async (request, reply) => {
+    const lixoEletronico = request.lixoEletronico;
+    await databasePostgres.createlixo(lixoEletronico);
+    if (exist[0]) {
+        return reply.status(200).send(' vermelho');
+    } else {
+        return reply.status(400).send(' verde ');
+    }
+})
+
 
 // CREATE
 server.post('/users', async (request, reply) => {
